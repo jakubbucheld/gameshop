@@ -13,4 +13,10 @@ public interface ProductRepository extends JpaRepository<Product, Long>
     List<Product> getAllBy();
 
     <S extends Product>S save(S entity);
+
+    List<Product> getAllByCategory_Id(Long id);
+
+    List<Product> getAllByCategory_NameContaining(String categorySearch);
+
+    List<Product> getAllByNameContaining(String searchPhrase);
 }

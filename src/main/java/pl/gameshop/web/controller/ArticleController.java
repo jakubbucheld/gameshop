@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.gameshop.domain.model.Article;
 import pl.gameshop.domain.model.Category;
 import pl.gameshop.domain.model.User;
@@ -31,18 +28,24 @@ public class ArticleController
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
+    /** MODEL ATTRIBUTES */
+
     @ModelAttribute(name = "usersList")
     public List<User> listOfUsers() { return userRepository.findAll(); }
 
     @ModelAttribute("categoriesList")
     public List<Category> categories() { return categoryRepository.getAllByCategoryGroupLike("ARTICLE"); }
 
+    /** GETS AND POSTS */
+    /** LIST */
     @GetMapping({"/", "/all"})
     public String getAll(Model model)
     {
         model.addAttribute("articlesList", articleRepository.findAll());
         return "/articles/all";
     }
+
+    /** ADDING */
 
     @GetMapping("/add")
     public String prepareAddArticle(Model model)
@@ -58,10 +61,23 @@ public class ArticleController
         log.info("Obiekt do zapisu :: {}", article);
         if(bindingResult.hasErrors())
         {
-            log.warn("Błą zapisu obiektu :: {}", article);
+            log.warn("Błąd zapisu obiektu :: {}", article);
         }
         articleRepository.save(article);
         log.info("Zapisany obiekt :: {}", article);
+        return "redirect:/articles/all";
+    }
+
+    /** DELETING */
+
+    @PostMapping("/delete")
+    public String processDeleteArticle(@RequestParam Long id)
+    {
+        Article article = articleRepository.getById(id);
+        log.info("Artykuł do usunięcia :: {}", article);
+//        if (articleRepository.exists())articleRepository.deleteById(article.getId());
+
+
         return "redirect:/articles/all";
     }
 }
