@@ -75,9 +75,28 @@ public class ArticleController
     {
         Article article = articleRepository.getById(id);
         log.info("Artykuł do usunięcia :: {}", article);
-//        if (articleRepository.exists())articleRepository.deleteById(article.getId());
-
-
+        if (articleRepository.existsById(id))
+        {
+            articleRepository.deleteById(article.getId());
+            log.info("Usunięto artykuł :: {}", article);
+        }
         return "redirect:/articles/all";
+    }
+
+    /** VIEWING */
+
+    @GetMapping("/read/{id}")
+    public String readArticle(Model model,
+                              @PathVariable Long id)
+    {
+        if (articleRepository.existsById(id))
+        {
+            model.addAttribute("article", articleRepository.getById(id));
+            return "/articles/read";
+        }
+        else
+        {
+            return "redirect:/articles/all";
+        }
     }
 }

@@ -7,21 +7,21 @@
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min-jsf.css"></script>
 </head>
-<body>
+<body style="padding: 12px">
 <form:form modelAttribute="article" method="post">
     <div class="field">
-        <label class="label"> Tytuł artykułu :: </label>
-        <form:input path="title"/><form:errors path="title"/>
+        <label class="label" style="padding: 8px"> Tytuł artykułu :: </label>
+        <form:input cssClass="input is-small" path="title"/><form:errors path="title"/>
     </div>
 
-    <div class="field">
+    <div class="field" style="padding: 8px">
         <label class="label"> Treść :: </label>
         <div class="control">
         <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
         </div>
     </div>
 
-    <p>
+    <p style="padding: 8px">
         Autor artykułu ::
         <form:select path="author">
             <form:option value="NONE" label="Wybierz..."/>
@@ -29,7 +29,7 @@
         </form:select>
         <form:errors path="category"/>
     </p>
-    <p>
+    <p style="padding: 8px">
         Kategoria artykułu ::
         <form:select path="category">
             <form:option value="NONE" label="Wybierz..."/>
@@ -39,7 +39,7 @@
     </p>
 
     <p>
-        <form:button> SUBMIT BUTTON </form:button>
+        <button type="submit" class="button is-info"> Wyślij </button>
     </p>
 </form:form>
 </body>

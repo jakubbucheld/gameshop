@@ -22,4 +22,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long>
     void deleteById(Long id);
 
     Article getById(Long id);
+
+    List<Article> getTop10ByOrderByIdDesc();
 }

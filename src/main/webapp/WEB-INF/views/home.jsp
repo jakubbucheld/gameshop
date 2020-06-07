@@ -1,4 +1,5 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,27 +12,37 @@
 <body>
 <section class="section">
     <div class="container">
-        <h1>
-            Użytkownik :: test1
-        </h1>
-        <h1>
-            Hasło :: 12345678
-        </h1>
-    </div>
-    <div class="container">
-        <h1 class="title">
-            <sec:authorize access="hasRole('ADMIN')"></sec:authorize>
-            <sec:authorize access="isAuthenticated()">
+            <h1 class="title">
+                <sec:authorize access="isAuthenticated()">
                 Witaj userze <sec:authentication property="name"/>
-            </sec:authorize>
-            <sec:authorize access="!isAuthenticated()">
+                </sec:authorize>
+                <sec:authorize access="!isAuthenticated()">
                 Witaj, niezalogowany
-            </sec:authorize>
-        </h1>
-        <p class="subtitle">
-            My first website with <strong>Bulma</strong>!
-        </p>
+                </sec:authorize>
+            </h1>
     </div>
+</section>
+<section class="title is-centered" style="padding: 20px">
+    <h2> OTO NAJŚWIEŻSZE ARTYKUŁY </h2>
+</section>
+<section>
+        <div class="container">
+            <div class="tile is-ancestor" style="flex-wrap: wrap">
+
+                    <c:forEach items="${lastTenArticles}" varStatus="stat" var="article" >
+                        <div class="tile is-parent is-4">
+                            <article class="tile is-child is-success box" style="margin: 20px">
+                                <p class="title"> ${article.title}</p>
+                                <p class="subtitle"> Autor : ${article.author.username}</p>
+                            </article>
+                        </div>
+                    </c:forEach>
+
+            </div>
+        </div>
+        <p class="subtitle" style="padding: 6px">
+            <strong style="color: blueviolet">a dupa tam</strong>
+        </p>
 </section>
 </body>
 </html>
