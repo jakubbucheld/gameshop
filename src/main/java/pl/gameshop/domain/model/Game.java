@@ -15,12 +15,10 @@ public class Game extends ParentEntity
     @Column
     private String name;
 
-    @ManyToOne
-    @JoinColumn
-    private Publisher publisher;
-
     @OneToMany
     @JoinColumn
     private List<Product> relatedProducts;
 
+    @ManyToOne
+    private Category category;
 }

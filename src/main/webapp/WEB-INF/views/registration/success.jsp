@@ -11,6 +11,6 @@
     <title>Sukces</title>
 </head>
 <body>
-!
+Gratulacje, gamoniu
 </body>
 </html>

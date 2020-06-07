@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.gameshop.domain.model.Category;
 import pl.gameshop.domain.model.Game;
 import pl.gameshop.domain.model.Product;
 import pl.gameshop.domain.model.Publisher;
+import pl.gameshop.domain.repository.CategoryRepository;
 import pl.gameshop.domain.repository.GameRepository;
 import pl.gameshop.domain.repository.ProductRepository;
+import pl.gameshop.domain.repository.PublisherRepository;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,12 +29,22 @@ public class ProductController
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
     private final ProductRepository productRepository;
     private final GameRepository gameRepository;
+    private final PublisherRepository publisherRepository;
+    private final CategoryRepository categoryRepository;
+
+    /**  >>> MODEL ATTRIBUTES  */
 
     @ModelAttribute("gamesList")
     public List<Game> games() { return gameRepository.findAll(); }
 
     @ModelAttribute("publishersList")
-    public List<Publisher> publishers() { return }
+    public List<Publisher> publishers() { return publisherRepository.findAll(); }
+
+    @ModelAttribute("categoriesList")
+    public List<Category> categories() { return categoryRepository.getAllByCategoryGroupLike("PRODUCT"); }
+
+    /** >>> ACTIONS */
+
     @GetMapping({"/", "all"})
     public String getProductList(Model model)
     {
@@ -43,7 +56,7 @@ public class ProductController
     public String prepareAddProduct(Model model)
     {
         model.addAttribute("product", new Product());
-        return "products/add";
+        return "/products/add";
     }
 
     @PostMapping("/add")

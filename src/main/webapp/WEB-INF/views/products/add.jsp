@@ -21,13 +21,32 @@
     </p>
 
     <p>
-        Powiązana gra : <form:checkboxes items="${gamesList}" path="game"/><form:errors path="game"/>
+        Powiązana gra ::
+        <form:select path="game" >
+            <form:option value="UNKNOWN" label = "Select"/>
+            <form:options itemValue="id" itemLabel="name" items="${gamesList}"/>
+        </form:select>
+        <form:errors path="game"/>
     </p>
 
     <p>
-        Wydawca : <form:checkboxes items="${publishersList}" path="publisher"/><form:errors path="game"/>
+        Wydawca ::
+        <form:select path="publisher" >
+            <form:option value="UNKNOWN" label = "Select"/>
+            <form:options itemValue="id" itemLabel="name" items="${publishersList}"/>
+        </form:select>
+        <form:errors path="publisher"/>
     </p>
 
+    <p>
+        Kategoria produktu :: 
+        <form:select path="category">
+            <form:option value="NONE" label="Wybierz..."/>
+            <form:options itemValue="id" itemLabel="name" items="${categoriesList}"/>
+        </form:select>
+        <form:errors path="category"/>
+    </p>
+    
     <p>
         <form:button> SUBMIT </form:button>
     </p>

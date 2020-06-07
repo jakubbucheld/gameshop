@@ -14,7 +14,7 @@
         <h1 class="title">
             LISTA DOSTĘPNYCH WYDAWCÓW
         </h1>
-        <table class="table" >
+        <table class="table is-striped" >
             <thead>
             <th>No. </th>
             <th>Nazwa wydawcy</th>

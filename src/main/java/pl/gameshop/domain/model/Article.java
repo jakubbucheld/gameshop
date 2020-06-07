@@ -21,4 +21,6 @@ public class Article extends ParentEntity
     @JoinColumn
     private User author;
 
+    @ManyToOne
+    private Category category;
 }

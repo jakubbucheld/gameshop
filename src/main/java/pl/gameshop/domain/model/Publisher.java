@@ -20,8 +20,10 @@ public class Publisher extends ParentEntity
     private List<User> relatedUsers;
 
     @OneToMany
+    @JoinColumn(name = "publishers_games")
     private List<Game> publishedGames;
 
     @OneToMany
+    @JoinColumn(name = "publishers_products")
     private List<Product> publishedProducts;
 }

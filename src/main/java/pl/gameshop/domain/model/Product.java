@@ -3,15 +3,12 @@ package pl.gameshop.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "products")
-@Getter @Setter @ToString(callSuper = true)
+@Getter @Setter @ToString(exclude = {"publisher", "game", "category"} ,callSuper = true)
 public class Product extends ParentEntity
 {
     @Column
@@ -28,12 +25,8 @@ public class Product extends ParentEntity
     private Publisher publisher;
 
     @ManyToOne
-    @JoinColumn
     private Game game;
 
-    @CollectionTable(name = "products_categories",
-        joinColumns = @JoinColumn(name = "name", referencedColumnName = "name"))
-    @UniqueElements
-    @Column(name = "category")
-    private String category;
+    @ManyToOne
+    private Category category;
 }

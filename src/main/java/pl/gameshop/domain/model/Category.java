@@ -2,15 +2,19 @@ package pl.gameshop.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import pl.gameshop.domain.model.ParentEntity;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-
-@MappedSuperclass  // nie tworzymy z tego encji
-@Getter @Setter
-public abstract class Category extends ParentEntity
+@Entity
+@Table(name = "categories")
+@Getter @Setter @ToString(callSuper = true)
+public  class Category extends ParentEntity
 {
     @Column
     private String name;
+
+    @Column
+    private String categoryGroup;
 }
+

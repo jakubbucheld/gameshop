@@ -4,27 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> > GRY < </title>
+    <title>Kategorie</title>
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
-
+<body>
 <section class="section">
     <div class="container">
         <h1 class="title">
-            LISTA DOSTĘPNYCH GIER
+            LISTA DOSTĘPNYCH KATEGORII
         </h1>
-        <table class="table is-striped">
+        <table class="table is-striped" >
             <thead>
             <th>No.</th>
-            <th>Nazwa gry</th>
-            <th>Wydawca</th>
+            <th>Nazwa kategorii</th>
+            <th>Grupa kategorii</th>
             </thead>
-            <c:forEach items="${gamesList}" var="game" varStatus="stat">
+            <c:forEach items="${categoriesList}" var="category" varStatus="stat">
                 <tr>
                     <td>${stat.count}</td>
-                    <td>${game.name}</td>
-                    <td>${game.publisher.name}</td>
+                    <td>${category.name}</td>
+                    <td>${category.categoryGroup}</td>
                 </tr>
             </c:forEach>
         </table>

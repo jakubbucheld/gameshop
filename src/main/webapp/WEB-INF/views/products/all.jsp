@@ -14,7 +14,7 @@
         <h1 class="title">
            LISTA DOSTĘPNYCH PRODUKTÓW
         </h1>
-        <table class="table" is-striped>
+        <table class="table is-striped">
             <thead>
                 <th>No.</th>
                 <th>Name</th>
