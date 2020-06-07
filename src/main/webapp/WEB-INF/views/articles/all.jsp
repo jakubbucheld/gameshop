@@ -4,35 +4,29 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Produkty</title>
+    <title>Wszystkie artykuły</title>
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
-
+<body>
 <section class="section">
     <div class="container">
         <h1 class="title">
-           LISTA DOSTĘPNYCH PRODUKTÓW
+            LISTA DOSTĘPNYCH ARTYKUŁÓW
         </h1>
         <table class="table is-striped">
             <thead>
-                <th>No.</th>
-                <th>Nazwa produktu</th>
-                <th>Powiązana gra</th>
-                <th>Cena</th>
-                <th>Wydawca / producent</th>
-                <th>Kategoria</th>
-                <th>Opis</th>
+            <th>No.</th>
+            <th>Tytuł</th>
+            <th>Treść</th>
+            <th>Autor</th>
             </thead>
-            <c:forEach items="${products}" var="product" varStatus="stat">
+            <c:forEach items="${articlesList}" var="article" varStatus="stat">
                 <tr>
                     <td>${stat.count}</td>
-                    <td>${product.name}</td>
-                    <td>${product.game.name}</td>
-                    <td>${product.priceInPln}</td>
-                    <td>${product.publisher.name}</td>
-                    <td>${product.category.name}</td>
-                    <td>${product.description}</td>
+                    <td>${article.title}</td>
+                    <td>${article.content}</td>
+                    <td>${article.author.username}</td>
                 </tr>
             </c:forEach>
         </table>

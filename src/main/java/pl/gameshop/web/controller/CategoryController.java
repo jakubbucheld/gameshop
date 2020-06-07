@@ -27,11 +27,11 @@ public class CategoryController
     @ModelAttribute(name = "categoriesEnum")
     public List<String> categoriesEnum()
     {
-        List<String> list = new ArrayList<>();
+        List<String> listOfCategories = new ArrayList<>();
         EnumSet.allOf(Categories.class).stream()
-                .forEach(a -> list.add(a.name()));
+                .forEach(a -> listOfCategories.add(a.name()));
 
-        return list;
+        return listOfCategories;
     }
 
     @GetMapping({"/all", "/"})

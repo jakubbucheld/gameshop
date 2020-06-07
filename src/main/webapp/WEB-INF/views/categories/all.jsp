@@ -14,6 +14,9 @@
         <h1 class="title">
             LISTA DOSTĘPNYCH KATEGORII
         </h1>
+        <a href="/categories/add">
+            <button class="button is-link" type="button"> Dodaj nową kategorię </button>
+        </a>
         <table class="table is-striped" >
             <thead>
             <th>No.</th>

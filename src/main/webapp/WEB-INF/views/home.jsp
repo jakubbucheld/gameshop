@@ -11,6 +11,14 @@
 <body>
 <section class="section">
     <div class="container">
+        <h1>
+            Użytkownik :: test1
+        </h1>
+        <h1>
+            Hasło :: 12345678
+        </h1>
+    </div>
+    <div class="container">
         <h1 class="title">
             <sec:authorize access="hasRole('ADMIN')"></sec:authorize>
             <sec:authorize access="isAuthenticated()">

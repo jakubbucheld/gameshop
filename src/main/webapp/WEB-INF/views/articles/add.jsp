@@ -3,31 +3,41 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title> Dodaj grę: </title>
+    <title>Dodaj artykuł</title>
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min-jsf.css"></script>
 </head>
 <body>
-<form:form modelAttribute="game" method="post">
-    <p>
-        Nazwa ::  <form:input path="name"/><form:errors path="name"/>
-    </p>
+<form:form modelAttribute="article" method="post">
+    <div class="field">
+        <label class="label"> Tytuł artykułu :: </label>
+        <form:input path="title"/><form:errors path="title"/>
+    </div>
 
-<%--    <p>--%>
-<%--        Wydawca ::  <form:select path="publisher" >--%>
-<%--                        <form:option value="UNKNOWN" label = "Select"/>--%>
-<%--                        <form:options itemValue="id" itemLabel="name" items="${publishersList}"/>--%>
-<%--                    </form:select>--%>
-<%--        <form:errors path="publisher"/>--%>
-<%--    </p>--%>
+    <div class="field">
+        <label class="label"> Treść :: </label>
+        <div class="control">
+        <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
+        </div>
+    </div>
+
     <p>
-        Kategoria gry ::
+        Autor artykułu ::
+        <form:select path="author">
+            <form:option value="NONE" label="Wybierz..."/>
+            <form:options itemValue="id" itemLabel="username" items="${usersList}"/>
+        </form:select>
+        <form:errors path="category"/>
+    </p>
+    <p>
+        Kategoria artykułu ::
         <form:select path="category">
             <form:option value="NONE" label="Wybierz..."/>
             <form:options itemValue="id" itemLabel="name" items="${categoriesList}"/>
         </form:select>
         <form:errors path="category"/>
     </p>
+
     <p>
         <form:button> SUBMIT BUTTON </form:button>
     </p>

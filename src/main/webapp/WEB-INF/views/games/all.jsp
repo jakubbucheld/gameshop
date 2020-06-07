@@ -24,7 +24,7 @@
                 <tr>
                     <td>${stat.count}</td>
                     <td>${game.name}</td>
-                    <td>${game.publisher.name}</td>
+                    <td>${game.category.name}</td>
                 </tr>
             </c:forEach>
         </table>

@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "users")
 // Spring Boot sam nazywa tabele, ale robimy to ręcznie
 
-@Getter @Setter @ToString(exclude = {"password"}, callSuper = true)  // -- callSuper wywołuje toStringa z klasy rodzica
+@Getter @Setter @ToString(exclude = {"password", "roles"}, callSuper = true)  // -- callSuper wywołuje toStringa z klasy rodzica
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends ParentEntity
 {
@@ -33,7 +33,7 @@ public class User extends ParentEntity
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username")
     )
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "role")
     private Set<String> roles = new HashSet<>();
     
