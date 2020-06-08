@@ -6,18 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import pl.gameshop.domain.model.Category;
-import pl.gameshop.domain.model.Game;
-import pl.gameshop.domain.model.Product;
-import pl.gameshop.domain.model.Publisher;
-import pl.gameshop.domain.repository.CategoryRepository;
-import pl.gameshop.domain.repository.GameRepository;
-import pl.gameshop.domain.repository.ProductRepository;
-import pl.gameshop.domain.repository.PublisherRepository;
+import org.springframework.web.bind.annotation.*;
+import pl.gameshop.domain.model.*;
+import pl.gameshop.domain.repository.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,6 +22,7 @@ public class ProductController
     private final GameRepository gameRepository;
     private final PublisherRepository publisherRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductCommentaryRepository productCommentaryRepository;
 
     /**  >>> MODEL ATTRIBUTES  */
 
@@ -71,5 +63,31 @@ public class ProductController
         productRepository.save(product);
         log.info("Zapisano obiekt :: {}", product);
         return "redirect:/products/all";
+    }
+
+    /** READ */
+
+    @GetMapping("/read/{id}")
+    public String readArticle(Model model,
+                              @PathVariable Long id)
+    {
+        // nowy obiekt artykułu do formularza
+        model.addAttribute("commentary", new ProductCommentary());
+        log.info("Wgrano pusty obiekt Commentary");
+
+        // lista dotychczasowo dodanych komentarzy
+        model.addAttribute("currentCommentaryList",
+                productCommentaryRepository.getAllByProduct_IdOrderByTimeCreatedDesc(id));
+        log.info("Wgrano listę komentarzy");
+
+        if (productRepository.existsById(id))
+        {
+            model.addAttribute("product", productRepository.getById(id));
+            return "/products/view";
+        }
+        else
+        {
+            return "redirect:/products/all";
+        }
     }
 }

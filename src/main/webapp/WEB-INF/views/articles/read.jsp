@@ -46,6 +46,18 @@
                         <form:hidden path="article" value="${article.id}" />
                     </form:form>
                 </div>
+                <div>
+                    <c:forEach items="${currentCommentaryList}" var="commentary" varStatus="count">
+                        <article class="${commentary.author.roles.contains('ROLE_AUTHOR') ? 'message is-success' : 'message is-info'}">
+                            <div class="message-header">
+                                <p><strong>${commentary.author.username}</strong> | ${commentary.timeCreated} </p>
+                            </div>
+                            <div class="message-body">
+                                ${commentary.content}
+                            </div>
+                        </article>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </article>

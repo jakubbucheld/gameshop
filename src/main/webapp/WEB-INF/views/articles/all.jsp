@@ -18,14 +18,14 @@
             <thead>
             <th>No.</th>
             <th>Tytuł</th>
-            <th>Treść</th>
-            <th>Autor</th>
+<%--            <th>Treść</th>--%>
+            <th>Autor</th>/
             </thead>
             <c:forEach items="${articlesList}" var="article" varStatus="stat">
                 <tr>
                     <td>${stat.count}</td>
                     <td>${article.title}</td>
-                    <td>${article.content}</td>
+<%--                    <td>${article.content}</td>--%>
                     <td>${article.author.username}</td>
                 </tr>
             </c:forEach>

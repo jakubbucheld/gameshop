@@ -32,8 +32,8 @@
                     <c:forEach items="${lastTenArticles}" varStatus="stat" var="article" >
                         <div class="tile is-parent is-4">
                             <article class="tile is-child is-success box" style="margin: 20px">
-                                <p class="title"> ${article.title}</p>
-                                <p class="subtitle"> Autor : ${article.author.username}</p>
+                                <p class="message-header"> ${article.title}</p>
+                                <p class="message-body"> Autor : ${article.author.username}</p>
                             </article>
                         </div>
                     </c:forEach>

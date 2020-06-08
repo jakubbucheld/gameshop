@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -29,4 +31,7 @@ public class Product extends ParentEntity
 
     @ManyToOne
     private Category category;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<ProductCommentary> productCommentaries = new ArrayList<>();
 }

@@ -11,7 +11,7 @@ public interface ArticleCommentaryRepository extends JpaRepository<ArticleCommen
 
     List<ArticleCommentary> getAllByAuthor_Id(Long authorId);
 
-    List<ArticleCommentary> getAllByArticle_Id(Long articleId);
+    List<ArticleCommentary> getAllByArticle_IdOrderByTimeCreatedDesc(Long articleId);
 
     <S extends ArticleCommentary>S save(S entity);
 }

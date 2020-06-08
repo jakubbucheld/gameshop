@@ -11,7 +11,7 @@ public interface ProductCommentaryRepository extends JpaRepository<ProductCommen
 
     List<ProductCommentary> getAllByAuthor_Id(Long authorId);
 
-    List<ProductCommentary> getAllByProduct_Id(Long productId);
+    List<ProductCommentary> getAllByProduct_IdOrderByTimeCreatedDesc(Long productId);
 
     <S extends ProductCommentary>S save(S entity);
 }

@@ -1,5 +1,9 @@
 package pl.gameshop.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -8,6 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "product_commentaries")
+@Getter @Setter @ToString(callSuper = true, exclude = {"product", "score"})
 public class ProductCommentary extends Commentary
 {
     @ManyToOne

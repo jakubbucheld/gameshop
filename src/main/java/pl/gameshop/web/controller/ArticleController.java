@@ -12,6 +12,7 @@ import pl.gameshop.domain.model.Article;
 import pl.gameshop.domain.model.ArticleCommentary;
 import pl.gameshop.domain.model.Category;
 import pl.gameshop.domain.model.User;
+import pl.gameshop.domain.repository.ArticleCommentaryRepository;
 import pl.gameshop.domain.repository.ArticleRepository;
 import pl.gameshop.domain.repository.CategoryRepository;
 import pl.gameshop.domain.repository.UserRepository;
@@ -28,6 +29,7 @@ public class ArticleController
     private final ArticleRepository articleRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final ArticleCommentaryRepository articleCommentaryRepository;
 
     /** MODEL ATTRIBUTES */
 
@@ -90,7 +92,15 @@ public class ArticleController
     public String readArticle(Model model,
                               @PathVariable Long id)
     {
+        // nowy obiekt artykułu do formularza
         model.addAttribute("commentary", new ArticleCommentary());
+        log.info("Wgrano pusty obiekt Commentary");
+
+        // lista dotychczasowo dodanych komentarzy
+        model.addAttribute("currentCommentaryList",
+                articleCommentaryRepository.getAllByArticle_IdOrderByTimeCreatedDesc(id));
+        log.info("Wgrano listę komentarzy");
+
         if (articleRepository.existsById(id))
         {
             model.addAttribute("article", articleRepository.getById(id));

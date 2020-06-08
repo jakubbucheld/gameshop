@@ -38,10 +38,10 @@ public class CommentaryController
 
     @PostMapping("/addArticleCommentary")
     public String postArticleCommentary(@Valid ArticleCommentary commentary,
-                                        BindingResult bindingResult,
-                                        @RequestParam Long article)
+                                        BindingResult bindingResult)
     {
-        commentary.setArticle(articleRepository.getById(article));
+//        commentary.setArticle(articleRepository.getById(article));
+//        Long id = articleRepository.getById(article).getId();
         log.info("Komentarz do dodania :: {}", commentary);
         if(bindingResult.hasErrors())
         {
@@ -50,6 +50,6 @@ public class CommentaryController
         }
         articleCommentaryRepository.save(commentary);
         log.info("Zapisano obiekt ArticleCommentary :: {}", commentary);
-        return "redirect:/articles/read/{articleId}";
+        return "redirect:/articles/read/"+commentary.getArticle().getId().toString();
     }
 }
