@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.gameshop.domain.model.Article;
+import pl.gameshop.domain.model.ArticleCommentary;
 import pl.gameshop.domain.model.Category;
 import pl.gameshop.domain.model.User;
 import pl.gameshop.domain.repository.ArticleRepository;
@@ -70,8 +71,8 @@ public class ArticleController
 
     /** DELETING */
 
-    @PostMapping("/delete")
-    public String processDeleteArticle(@RequestParam Long id)
+    @PostMapping("/delete/{id}")
+    public String processDeleteArticle(@PathVariable Long id)
     {
         Article article = articleRepository.getById(id);
         log.info("Artykuł do usunięcia :: {}", article);
@@ -89,6 +90,7 @@ public class ArticleController
     public String readArticle(Model model,
                               @PathVariable Long id)
     {
+        model.addAttribute("commentary", new ArticleCommentary());
         if (articleRepository.existsById(id))
         {
             model.addAttribute("article", articleRepository.getById(id));

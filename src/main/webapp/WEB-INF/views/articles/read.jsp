@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -24,6 +25,28 @@
                      ${article.author.username}
                 </div>
             </article>
+            <div class="field" style="padding: 8px">
+                <label class="label"> Dodaj komentarz :: </label>
+                <div class="control">
+                    <form:form action="/commentaries/addArticleCommentary" modelAttribute="commentary" method="post">
+                        <p>
+                            treść komentarza :: <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
+                        </p>
+                        <p>
+                            Autor komentarza ::
+                            <form:select path="author">
+                                <form:option value="NONE" label="Wybierz..."/>
+                                <form:options itemValue="id" itemLabel="username" items="${usersList}"/>
+                            </form:select>
+                            <form:errors path="author"/>
+                        </p>
+                        <p>
+                            <button class="button is-primary is-small" type="submit"> dodaj komentarz </button>
+                        </p>
+                        <form:hidden path="article" value="${article.id}" />
+                    </form:form>
+                </div>
+            </div>
         </div>
     </article>
 </section>
