@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import pl.gameshop.security.Roles;
 
 import javax.sql.DataSource;
 
@@ -19,20 +21,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     private final DataSource dataSource;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") // tłumienie warningu - bug IntelliJ'a/Springa
-    public SecurityConfig(DataSource dataSource) {
+    public SecurityConfig(DataSource dataSource)
+    {
         this.dataSource = dataSource;
     }
+
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth
-                .inMemoryAuthentication()
-                    .withUser("user").password("{noop}pass").roles("USER")
-                    .and()
-                .and()
-                .jdbcAuthentication()
+        auth.jdbcAuthentication()
                     .dataSource(dataSource)
                     .usersByUsernameQuery("SELECT username, password, active FROM users WHERE username = ?")
                     .authoritiesByUsernameQuery("SELECT username, role FROM users_roles WHERE username = ?");
@@ -48,11 +47,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/register").permitAll()
+                .antMatchers("/registration").permitAll()
                 .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/articles/add", "/articles/add/**").hasRole("AUTHOR")
+                .antMatchers("/users", "/users/**").hasRole("ADMIN")
+                .antMatchers("/commentaries", "/commentaries/**").authenticated()
                 .and()
                 .formLogin();
+        http
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+
     }
 
     @Bean
@@ -60,4 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler()
+    {
+        return new CustomAccessDeniedHandler();
+    }
+
 }

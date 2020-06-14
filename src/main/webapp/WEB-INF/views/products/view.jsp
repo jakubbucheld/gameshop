@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${article.title}</title>
+    <title>${product.name}</title>
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
@@ -16,22 +16,28 @@
         <div class="container">
             <article class="message is-dark">
                 <div class="message-header">
-                    <p>${article.title}</p>
-                </div>
-                <div class="message-body">
-                    ${article.content}
+                    <p>${product.name}</p>
+                    <p class="is-small">${product.category.name}</p>
                 </div>
                 <div class="message-body is-small">
-                     Autor artykułu :
-                     ${article.author.username}
+                    Opis produktu ::
+                    ${product.description}
+                    Wydawca ::
+                    ${product.publisher.name}
+                    <p class="box is-warning">
+                        CENA :: ${product.priceInPln}
+                    </p>
                 </div>
             </article>
             <div class="field" style="padding: 8px">
                 <label class="label"> Dodaj komentarz :: </label>
                 <div class="control">
-                    <form:form action="/commentaries/addArticleCommentary" modelAttribute="commentary" method="post">
+                    <form:form action="/commentaries/addProductCommentary" modelAttribute="commentary" method="post">
                         <p>
-                            Treść komentarza :: <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
+                            treść komentarza :: <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
+                        </p>
+                        <p>
+                            ocena :: <form:input path="score" cssClass="number"/><form:errors path="score"/>
                         </p>
                         <p>
                             Autor komentarza ::
@@ -44,7 +50,7 @@
                         <p>
                             <button class="button is-primary is-small" type="submit"> dodaj komentarz </button>
                         </p>
-                        <form:hidden path="article" value="${article.id}" />
+                        <form:hidden path="product" value="${product.id}" />
                     </form:form>
                 </div>
                 <div>
@@ -54,7 +60,7 @@
                                 <p><strong>${commentary.author.username}</strong> | ${commentary.timeCreated} </p>
                             </div>
                             <div class="message-body">
-                                ${commentary.content}
+                                    ${commentary.content}
                             </div>
                         </article>
                     </c:forEach>

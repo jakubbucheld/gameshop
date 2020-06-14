@@ -1,6 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="mainheader.jsp"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -32,7 +33,11 @@
                     <c:forEach items="${lastTenArticles}" varStatus="stat" var="article" >
                         <div class="tile is-parent is-4">
                             <article class="tile is-child is-success box" style="margin: 20px">
-                                <p class="message-header"> ${article.title}</p>
+                                <a style="color: azure" href="articles/read/${article.id}">
+                                    <p class="message-header">
+                                        ${article.title}
+                                    </p>
+                                </a>
                                 <p class="message-body"> Autor : ${article.author.username}</p>
                             </article>
                         </div>

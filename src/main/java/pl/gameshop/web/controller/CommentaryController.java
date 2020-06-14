@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.gameshop.domain.model.Article;
 import pl.gameshop.domain.model.ArticleCommentary;
+import pl.gameshop.domain.model.ProductCommentary;
 import pl.gameshop.domain.model.User;
 import pl.gameshop.domain.repository.ArticleCommentaryRepository;
 import pl.gameshop.domain.repository.ArticleRepository;
@@ -46,10 +47,30 @@ public class CommentaryController
         if(bindingResult.hasErrors())
         {
             log.warn("Błąd podczas zapisu obiektu ArticleCommentary :: {}", commentary);
-            return "redirect:/articles/read/{articleId}";
+            return "redirect:/articles/read/" +
+                    commentary.getArticle().getId().toString();
         }
         articleCommentaryRepository.save(commentary);
         log.info("Zapisano obiekt ArticleCommentary :: {}", commentary);
         return "redirect:/articles/read/"+commentary.getArticle().getId().toString();
     }
+    @PostMapping("/addProductCommentary")
+    public String postProductCommentary(@Valid ProductCommentary commentary,
+                                        BindingResult bindingResult)
+    {
+//        commentary.setArticle(articleRepository.getById(article));
+//        Long id = articleRepository.getById(article).getId();
+        log.info("Komentarz do dodania :: {}", commentary);
+        if(bindingResult.hasErrors())
+        {
+            log.warn("Błąd podczas zapisu obiektu ProductCommentary :: {}", commentary);
+            return "redirect:/products/view/" +
+                    commentary.getProduct().getId().toString();
+        }
+        productCommentaryRepository.save(commentary);
+        log.info("Zapisano obiekt ProductCommentary :: {}", commentary);
+        return "redirect:/products/view/" +
+                commentary.getProduct().getId().toString();
+    }
+
 }

@@ -3,6 +3,7 @@ package pl.gameshop.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.context.annotation.Scope;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,5 @@ public class ProductCommentary extends Commentary
     private Product product;
 
     @Column
-    @Size(min = 1, max = 10)
     private Integer score;
 }

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../mainheader.jsp"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -32,7 +33,7 @@
                         <c:forEach items="${user.roles}" varStatus="smallstat" var="role">
                             <form method="post" action="/users/${user.id}/deleteroles">
                                 <sec:csrfInput/>
-                                <button type="submit" name="roleName" value="${role}" class="button is-small is-outlined is-danger is-link is-light">Odbierz rolę ${role}</button>
+                                <button type="sumbit" name="roleName" value="${role}" class="button is-small is-outlined is-danger is-link is-light">Odbierz rolę ${role}</button>
                             </form>
                         </c:forEach>
                     </td>

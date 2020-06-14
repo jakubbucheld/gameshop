@@ -22,4 +22,10 @@ public class HomeController
         model.addAttribute("lastTenArticles", articleRepository.getTop10ByOrderByIdDesc());
         return "/home";
     }
+
+    @GetMapping("/about")
+    public String about()
+    {
+        return "/about";
+    }
 }

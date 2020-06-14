@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
-
+<body>
 <section class="section">
     <div class="container">
         <h1 class="title">

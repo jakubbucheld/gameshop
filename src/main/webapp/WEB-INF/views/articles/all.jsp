@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../mainheader.jsp"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,6 +13,14 @@
 <body>
 <section class="section">
     <div class="container">
+        <label class="label">Szukaj...</label>
+            <form action="/articles/all">
+            <input type="text" name="search" placeholder="<%= request.getParameter("search") %>">
+            <input class="button is-primary is-small" type="submit">
+    </div>
+</section>
+<section>
+    <div class="container">
         <h1 class="title">
             LISTA DOSTĘPNYCH ARTYKUŁÓW
         </h1>
@@ -18,14 +28,16 @@
             <thead>
             <th>No.</th>
             <th>Tytuł</th>
-<%--            <th>Treść</th>--%>
-            <th>Autor</th>/
+            <th>Autor</th>
             </thead>
             <c:forEach items="${articlesList}" var="article" varStatus="stat">
                 <tr>
                     <td>${stat.count}</td>
-                    <td>${article.title}</td>
-<%--                    <td>${article.content}</td>--%>
+                    <td>
+                        <a href="/articles/read/${article.id}">
+                                ${article.title}
+                        </a>
+                    </td>
                     <td>${article.author.username}</td>
                 </tr>
             </c:forEach>

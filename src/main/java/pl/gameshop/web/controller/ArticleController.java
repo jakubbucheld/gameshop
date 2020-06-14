@@ -17,53 +17,68 @@ import pl.gameshop.domain.repository.ArticleRepository;
 import pl.gameshop.domain.repository.CategoryRepository;
 import pl.gameshop.domain.repository.UserRepository;
 
+import javax.persistence.PrePersist;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @Transactional
 @RequestMapping("/articles") @RequiredArgsConstructor
-public class ArticleController
-{
+public class ArticleController {
     private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
     private final ArticleRepository articleRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final ArticleCommentaryRepository articleCommentaryRepository;
 
-    /** MODEL ATTRIBUTES */
+    /**
+     * MODEL ATTRIBUTES
+     */
 
     @ModelAttribute(name = "usersList")
-    public List<User> listOfUsers() { return userRepository.findAll(); }
+    public List<User> listOfUsers() {
+        return userRepository.findAll();
+    }
 
     @ModelAttribute("categoriesList")
-    public List<Category> categories() { return categoryRepository.getAllByCategoryGroupLike("ARTICLE"); }
+    public List<Category> categories() {
+        return categoryRepository.getAllByCategoryGroupLike("ARTICLE");
+    }
 
     /** GETS AND POSTS */
-    /** LIST */
-    @GetMapping({"/", "/all"})
-    public String getAll(Model model)
+    /**
+     * LIST
+     */
+    @GetMapping({"/all", "/"})
+    public String getAll(Model model,
+                         @RequestParam(required = false) String search)
     {
-        model.addAttribute("articlesList", articleRepository.findAll());
+        if (search==null)
+        {
+            model.addAttribute("articlesList", articleRepository.findAll());
+        } else {
+            log.warn("Szukana fraza :: {}", search);
+            model.addAttribute("articlesList",
+                    articleRepository.getAllByTitleContainsOrAuthor_UsernameContains(search, search));
+        }
         return "/articles/all";
     }
 
-    /** ADDING */
+    /**
+     * ADDING
+     */
 
     @GetMapping("/add")
-    public String prepareAddArticle(Model model)
-    {
+    public String prepareAddArticle(Model model) {
         model.addAttribute("article", new Article());
         return "/articles/add";
     }
 
     @PostMapping("/add")
     public String processAddArticle(@Valid Article article,
-                                    BindingResult bindingResult)
-    {
+                                    BindingResult bindingResult) {
         log.info("Obiekt do zapisu :: {}", article);
-        if(bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             log.warn("Błąd zapisu obiektu :: {}", article);
         }
         articleRepository.save(article);
@@ -71,43 +86,42 @@ public class ArticleController
         return "redirect:/articles/all";
     }
 
-    /** DELETING */
+    /**
+     * DELETING
+     */
 
     @PostMapping("/delete/{id}")
-    public String processDeleteArticle(@PathVariable Long id)
-    {
+    public String processDeleteArticle(@PathVariable Long id) {
         Article article = articleRepository.getById(id);
         log.info("Artykuł do usunięcia :: {}", article);
-        if (articleRepository.existsById(id))
-        {
+        if (articleRepository.existsById(id)) {
             articleRepository.deleteById(article.getId());
             log.info("Usunięto artykuł :: {}", article);
         }
         return "redirect:/articles/all";
     }
 
-    /** VIEWING */
+    /**
+     * VIEWING
+     */
 
     @GetMapping("/read/{id}")
     public String readArticle(Model model,
-                              @PathVariable Long id)
-    {
-        // nowy obiekt artykułu do formularza
-        model.addAttribute("commentary", new ArticleCommentary());
-        log.info("Wgrano pusty obiekt Commentary");
+                              @PathVariable Long id) {
 
-        // lista dotychczasowo dodanych komentarzy
-        model.addAttribute("currentCommentaryList",
-                articleCommentaryRepository.getAllByArticle_IdOrderByTimeCreatedDesc(id));
-        log.info("Wgrano listę komentarzy");
+        if (articleRepository.existsById(id)) {
+            // nowy obiekt artykułu do formularza
+            model.addAttribute("commentary", new ArticleCommentary());
+            log.info("Wgrano pusty obiekt Commentary");
 
-        if (articleRepository.existsById(id))
-        {
+            // lista dotychczasowo dodanych komentarzy
+            model.addAttribute("currentCommentaryList",
+                    articleCommentaryRepository.getAllByArticle_IdOrderByTimeCreatedDesc(id));
+            log.info("Wgrano listę komentarzy");
+
             model.addAttribute("article", articleRepository.getById(id));
             return "/articles/read";
-        }
-        else
-        {
+        } else {
             return "redirect:/articles/all";
         }
     }

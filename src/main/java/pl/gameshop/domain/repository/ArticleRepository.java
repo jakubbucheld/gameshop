@@ -6,12 +6,15 @@ import pl.gameshop.domain.model.Product;
 
 import java.util.List;
 
-
 public interface ArticleRepository extends JpaRepository<Article, Long>
 {
     <S extends Article> S save(S entity);
 
     List<Article> getAllByAuthor_Id(Long id);
+
+    List<Article> getByAuthorIsLike(String author);
+
+    List<Article> getAllByTitleContainsOrAuthor_UsernameContains(String titleSearchPhrase, String authorSearchPhrase);
 
     List<Article> getAllByCategory_Id(Long id);
 

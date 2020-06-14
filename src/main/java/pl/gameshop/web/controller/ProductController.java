@@ -23,8 +23,11 @@ public class ProductController
     private final PublisherRepository publisherRepository;
     private final CategoryRepository categoryRepository;
     private final ProductCommentaryRepository productCommentaryRepository;
+    private final UserRepository userRepository;
 
     /**  >>> MODEL ATTRIBUTES  */
+    @ModelAttribute(name = "usersList")
+    public List<User> listOfUsers() { return userRepository.findAll(); }
 
     @ModelAttribute("gamesList")
     public List<Game> games() { return gameRepository.findAll(); }
@@ -67,8 +70,8 @@ public class ProductController
 
     /** READ */
 
-    @GetMapping("/read/{id}")
-    public String readArticle(Model model,
+    @GetMapping("/view/{id}")
+    public String viewProduct(Model model,
                               @PathVariable Long id)
     {
         // nowy obiekt artykułu do formularza

@@ -1,6 +1,7 @@
 package pl.gameshop.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ public class UserController
 
     @PostMapping("/{id}/addroles")
     public String addUserRoles(@PathVariable Long id,
-                                @RequestParam String roleName)
+                               @RequestParam String roleName)
     {
         User user = userRepository.getById(id);
         user.getRoles().add(Roles.valueOf(roleName).name());

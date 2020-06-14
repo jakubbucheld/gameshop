@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,17 @@ public class Article extends ParentEntity
     @ManyToOne
     private Category category;
 
+    @Column
+    private LocalDateTime timeCreated;
+
+    @PrePersist
+    void timeCreated()
+    {
+        this.timeCreated = LocalDateTime.now();
+    }
+
     @OneToMany(mappedBy = "article", fetch = FetchType.EAGER)
     private List<ArticleCommentary> articleCommentaries = new ArrayList<>();
+
+
 }
