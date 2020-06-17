@@ -11,18 +11,6 @@
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min-jsf.css"></script>
 </head>
 <body>
-<section class="section">
-    <div class="container">
-            <h1 class="title">
-                <sec:authorize access="isAuthenticated()">
-                Witaj userze <sec:authentication property="name"/>
-                </sec:authorize>
-                <sec:authorize access="!isAuthenticated()">
-                Witaj, niezalogowany
-                </sec:authorize>
-            </h1>
-    </div>
-</section>
 <section class="title is-centered" style="padding: 20px">
     <h2> OTO NAJŚWIEŻSZE ARTYKUŁY </h2>
 </section>

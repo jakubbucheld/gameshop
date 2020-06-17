@@ -17,6 +17,9 @@ import java.util.Locale;
 public class BillingData extends ParentEntity
 {
     @Column
+    private String addressAlias;
+
+    @Column
     private String firstName;
 
     @Column

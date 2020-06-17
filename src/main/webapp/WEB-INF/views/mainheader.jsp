@@ -46,7 +46,7 @@
                         </div>
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
-                            zalogowano jako : &nbsp<strong><sec:authentication property="name"/>&nbsp&nbsp&nbsp&nbsp</strong>
+                            Zalogowano jako : &nbsp<strong><sec:authentication property="name"/>&nbsp&nbsp&nbsp&nbsp</strong>
                         <div class="buttons">
                             <a class="button is-danger" href="/logout">
                                 Wyloguj

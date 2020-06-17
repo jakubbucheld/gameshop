@@ -20,8 +20,7 @@ public class Article extends ParentEntity
     @Column
     private String content;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne @JoinColumn
     private User author;
 
     @ManyToOne
