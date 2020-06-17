@@ -21,15 +21,6 @@
         <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
         </div>
     </div>
-
-    <p style="padding: 8px">
-        Autor artykułu ::
-        <form:select path="author">
-            <form:option value="NONE" label="Wybierz..."/>
-            <form:options itemValue="id" itemLabel="username" items="${usersList}"/>
-        </form:select>
-        <form:errors path="category"/>
-    </p>
     <p style="padding: 8px">
         Kategoria artykułu ::
         <form:select path="category">

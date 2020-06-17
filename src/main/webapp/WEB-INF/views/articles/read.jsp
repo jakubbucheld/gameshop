@@ -27,27 +27,24 @@
                 </div>
             </article>
             <div class="field" style="padding: 8px">
+                <sec:authorize access="isAuthenticated()">
                 <label class="label"> Dodaj komentarz :: </label>
-                <div class="control">
-                    <form:form action="/commentaries/addArticleCommentary" modelAttribute="commentary" method="post">
-                        <p>
-                            Treść komentarza :: <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
-                        </p>
-                        <p>
-                            Autor komentarza ::
-                            <form:select path="author">
-                                <form:option value="NONE" label="Wybierz..."/>
-                                <form:options itemValue="id" itemLabel="username" items="${usersList}"/>
-                            </form:select>
-                            <form:errors path="author"/>
-                        </p>
-                        <p>
-                            <button class="button is-primary is-small" type="submit"> dodaj komentarz </button>
-                        </p>
-                        <form:hidden path="article" value="${article.id}" />
-                    </form:form>
-                </div>
+                    <div class="control">
+                            <form:form action="/commentaries/addArticleCommentary" modelAttribute="commentary" method="post">
+                                <p>
+                                   <form:input cssClass="textarea" path="content"/><form:errors path="content"/>
+                                </p>
+                                <p>
+                                    <button class="button is-primary is-small" type="submit"> dodaj komentarz </button>
+                                </p>
+                                <form:hidden path="article" value="${article.id}" />
+                            </form:form>
+                    </div>
+                </sec:authorize>
                 <div>
+                    <h2 class="subtitle is-center" style="padding: 1%">
+                        Lista komentarzy ::
+                    </h2>
                     <c:forEach items="${currentCommentaryList}" var="commentary" varStatus="count">
                         <article class="${commentary.author.roles.contains('ROLE_AUTHOR') ? 'message is-success' : 'message is-info'}">
                             <div class="message-header">

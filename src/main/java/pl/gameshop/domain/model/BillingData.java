@@ -2,15 +2,26 @@ package pl.gameshop.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.Locale;
 
-@MappedSuperclass
-@Getter @Setter
-public abstract class BillingData extends ParentEntity
+@Entity
+@Table(name = "billing_datas")
+
+@Getter @Setter @ToString(callSuper = true, exclude =
+        {"user", "phoneNumber", "addressFirstLine",
+        "addressSecondLine", "houseNumber", "flatNumber",
+        "city","postalCode", "isoCountryCode"})
+public class BillingData extends ParentEntity
 {
+    @Column
+    private String firstName;
+
+    @Column
+    private String lastName;
+
     @Column(nullable = false)
     private String phoneNumber;
 
@@ -34,4 +45,7 @@ public abstract class BillingData extends ParentEntity
 
     @Column(nullable = false)
     private Locale.IsoCountryCode isoCountryCode;
+
+    @ManyToOne
+    private User user;
 }

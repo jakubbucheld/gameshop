@@ -7,14 +7,14 @@ import pl.gameshop.domain.model.ParentEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 // Spring Boot sam nazywa tabele, ale robimy to ręcznie
 
-@Getter @Setter @ToString(exclude = {"password", "roles"}, callSuper = true)  // -- callSuper wywołuje toStringa z klasy rodzica
-@Inheritance(strategy = InheritanceType.JOINED)
+@Getter @Setter @ToString(exclude = {"password", "roles", "userAddresses"}, callSuper = true)  // -- callSuper wywołuje toStringa z klasy rodzica
 public class User extends ParentEntity
 {
     @Column(nullable = false, unique = true)
@@ -28,6 +28,9 @@ public class User extends ParentEntity
 
     @Column
     private Boolean active;
+
+    @OneToMany
+    private List<BillingData> userAddresses;
 
     @CollectionTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username")

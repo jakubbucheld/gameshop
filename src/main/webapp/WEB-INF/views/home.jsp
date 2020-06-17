@@ -29,7 +29,6 @@
 <section>
         <div class="container">
             <div class="tile is-ancestor" style="flex-wrap: wrap">
-
                     <c:forEach items="${lastTenArticles}" varStatus="stat" var="article" >
                         <div class="tile is-parent is-4">
                             <article class="tile is-child is-success box" style="margin: 20px">

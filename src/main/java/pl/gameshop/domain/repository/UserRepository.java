@@ -11,6 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long>
 {
     User getById(Long id);
 
+    User getByUsername(String username);
+
     List<User> getAllByRolesContaining(String role);
 
     List<User> getAllByUsernameContaining(String searchPhrase);

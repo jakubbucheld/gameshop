@@ -3,6 +3,9 @@ package pl.gameshop.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import pl.gameshop.domain.repository.UserRepository;
 
 import javax.persistence.PrePersist;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -69,14 +73,20 @@ public class ArticleController {
      */
 
     @GetMapping("/add")
-    public String prepareAddArticle(Model model) {
+    public String prepareAddArticle(Model model)
+    {
         model.addAttribute("article", new Article());
         return "/articles/add";
     }
 
     @PostMapping("/add")
     public String processAddArticle(@Valid Article article,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult,
+                                    @AuthenticationPrincipal Principal principal)
+    {
+        User user = userRepository.getByUsername(principal.getName());
+
+        article.setAuthor(user);
         log.info("Obiekt do zapisu :: {}", article);
         if (bindingResult.hasErrors()) {
             log.warn("Błąd zapisu obiektu :: {}", article);

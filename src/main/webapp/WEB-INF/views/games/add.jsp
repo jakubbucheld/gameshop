@@ -13,14 +13,6 @@
     <p>
         Nazwa ::  <form:input path="name"/><form:errors path="name"/>
     </p>
-
-<%--    <p>--%>
-<%--        Wydawca ::  <form:select path="publisher" >--%>
-<%--                        <form:option value="UNKNOWN" label = "Select"/>--%>
-<%--                        <form:options itemValue="id" itemLabel="name" items="${publishersList}"/>--%>
-<%--                    </form:select>--%>
-<%--        <form:errors path="publisher"/>--%>
-<%--    </p>--%>
     <p>
         Kategoria gry ::
         <form:select path="category">

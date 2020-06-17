@@ -3,6 +3,7 @@ package pl.gameshop.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import pl.gameshop.domain.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,10 +41,12 @@ public class CommentaryController
 
     @PostMapping("/addArticleCommentary")
     public String postArticleCommentary(@Valid ArticleCommentary commentary,
-                                        BindingResult bindingResult)
+                                        BindingResult bindingResult,
+                                        @AuthenticationPrincipal Principal principal)
     {
-//        commentary.setArticle(articleRepository.getById(article));
-//        Long id = articleRepository.getById(article).getId();
+        User user = userRepository.getByUsername(principal.getName());
+        commentary.setAuthor(user);
+
         log.info("Komentarz do dodania :: {}", commentary);
         if(bindingResult.hasErrors())
         {
