@@ -12,15 +12,15 @@
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
 <body>
-<section class="section columns is-fullheight">
-    <div class="container column is-11">
+<section class="section columns is-fullheight is-fullwidth">
+    <div class="container column is-10">
         <h1 class="title">
            Dostępne produkty
         </h1>
         <div class="container">
             <div class="tile is-ancestor" style="flex-wrap: wrap">
                 <c:forEach items="${products}" var="product" varStatus="stat">
-                    <div class="tile is-parent is-3">
+                    <div class="tile is-parent is-4">
                         <article class="tile is-child is-dark message" style="margin: 20px; padding: 20px">
                             <a href="/products/view/${product.id}"></a>
                             <p class="message-header" style="flex-wrap: wrap">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="container column is-1">
+    <div class="container column is-2">
         <div class="box is-fullheight">
             KOSZYK ::
             <div class="field">
@@ -58,11 +58,13 @@
                     <thead>
                         <th>No.</th>
                         <th>Nazwa</th>
+                        <th>Ilość</th>
                     </thead>
                     <c:forEach items="${sessionScope.shoppingCart.orderRecords}" var="record" varStatus="count">
                         <tr>
                             <td>${count.count}</td>
                             <td>${record.product.name}</td>
+                            <td>${record.quantity}</td>
                         </tr>
                     </c:forEach>
                 </table>

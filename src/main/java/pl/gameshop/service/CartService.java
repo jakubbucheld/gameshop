@@ -28,13 +28,36 @@ public class CartService
     private final OrderRepository orderRepository;
     private final OrderRecordRepository recordRepository;
 
+    public Double getCartTotalValue(ShoppingCart cart)
+    {
+        List<OrderRecord> listOfOrderRecords = cart.getOrderRecords();
+        Double finalPrice = 0.0;
+        for (OrderRecord record: listOfOrderRecords)
+        {
+            finalPrice += record.getQuantity()* record.getUnitPrice();
+        }
+        return finalPrice;
+    }
 
     public void addProductToCart(OrderRecord record,
                                          ShoppingCart cart)
     {
+        if(record.getQuantity()<1) { return; }
         List<OrderRecord> currentProductList = cart.getOrderRecords();
-        currentProductList.add(record);
-        cart.setOrderRecords(currentProductList);
+        boolean ifPresent = false;
+        for (OrderRecord current : currentProductList)
+        {
+            if(current.getProduct().equals(record.getProduct()))
+            {
+                current.setQuantity((current.getQuantity()+ record.getQuantity()));
+                ifPresent = true;
+            }
+        }
+        if(!ifPresent)
+        {
+                currentProductList.add(record);
+                cart.setOrderRecords(currentProductList);
+        }
     }
 
     public void removeProductFromCart(OrderRecord record,

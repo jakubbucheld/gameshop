@@ -14,7 +14,7 @@ import java.util.Locale;
         {"user", "phoneNumber", "addressFirstLine",
         "addressSecondLine", "houseNumber", "flatNumber",
         "city","postalCode", "isoCountryCode"})
-public class BillingData extends ParentEntity
+public class ShippingData extends ParentEntity
 {
     @Column
     private String addressAlias;

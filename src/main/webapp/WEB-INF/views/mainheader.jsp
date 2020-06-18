@@ -14,7 +14,7 @@
         <div class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item" href="/">
-                   <span class="icon is-medium"><i class="fas fa-home" aria-hidden="true"></i></span>
+                   <span class="icon is-medium"><i class="fas fa-home"></i></span>
                    <span>Strona główna</span>
                 </a>
                 <a class="navbar-item" href="/articles/all">

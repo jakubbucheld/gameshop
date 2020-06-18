@@ -3,9 +3,8 @@ package pl.gameshop.domain.model.shopping;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.gameshop.domain.model.BillingData;
+import pl.gameshop.domain.model.ShippingData;
 import pl.gameshop.domain.model.ParentEntity;
-import pl.gameshop.domain.model.Product;
 import pl.gameshop.domain.model.User;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ import java.util.Set;
 public class Order extends ParentEntity
 {
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<OrderRecord> orderRecords;
+    private List<OrderRecord> orderRecords;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -30,9 +29,12 @@ public class Order extends ParentEntity
     @Column
     LocalDateTime timeCreated;
 
+    @Column
+    Double finalPrice;
+
     @ManyToOne
-    @JoinColumn(name = "billing", nullable = false)
-    private BillingData orderBillingData;
+    @JoinColumn(name = "shipping", nullable = false)
+    private ShippingData orderShippingData;
 
     @PrePersist
     void timeCreated()

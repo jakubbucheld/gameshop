@@ -3,7 +3,6 @@ package pl.gameshop.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.gameshop.domain.model.ParentEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -30,7 +29,7 @@ public class User extends ParentEntity
     private Boolean active;
 
     @OneToMany
-    private List<BillingData> userAddresses;
+    private List<ShippingData> userAddresses;
 
     @CollectionTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username")
