@@ -19,7 +19,7 @@ import java.util.Set;
 @Getter @Setter @ToString(callSuper = true)
 public class Order extends ParentEntity
 {
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<OrderRecord> orderRecords;
 
     @ManyToOne

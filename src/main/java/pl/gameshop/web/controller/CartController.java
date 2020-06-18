@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,21 +84,21 @@ public class CartController
     public String prepareFinalizeOrder(Model model,
                                        @AuthenticationPrincipal Principal principal)
     {
-        return "";
+        model.addAttribute(session.getAttribute("shoppingCart"));
+        return "/cart/finalize";
     }
 
     @PostMapping("/finalize")
     public String processFinalizeOrder(@AuthenticationPrincipal Principal principal,
                                        @Valid ShippingData shippingData)
     {
-        userRepository.getByUsername(principal.getName());
+        if(principal.getName()==null)
+        {
+            return "redirect:/login";
+        }
+        User user = userRepository.getByUsername(principal.getName());
         ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("shoppingCart");
-        shoppingCart
-                .getOrderService()
-                .finalizeOrder
-                        (shoppingCart,
-                        userRepository.getByUsername(principal.getName()),
-                        shippingData);
+        shoppingCart.getOrderService().finalizeOrder(user,shippingData);
 
         return "redirect:/products/all";
     }
