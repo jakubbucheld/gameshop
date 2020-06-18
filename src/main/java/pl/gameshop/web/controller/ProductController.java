@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.gameshop.domain.model.*;
+import pl.gameshop.domain.model.shopping.OrderRecord;
 import pl.gameshop.domain.repository.*;
 
 import javax.validation.Valid;
@@ -44,6 +45,8 @@ public class ProductController
     public String getProductList(Model model)
     {
         model.addAttribute("products", productRepository.findAll());
+
+        model.addAttribute("orderRecord", new OrderRecord());
         return "/products/all";
     }
 

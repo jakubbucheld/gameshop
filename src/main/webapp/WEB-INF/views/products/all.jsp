@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../mainheader.jsp"%>
 <html>
@@ -9,34 +11,64 @@
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
-
-<section class="section">
-    <div class="container">
+<body>
+<section class="section columns is-fullheight">
+    <div class="container column is-11">
         <h1 class="title">
-           LISTA DOSTĘPNYCH PRODUKTÓW
+           Dostępne produkty
         </h1>
-        <table class="table is-striped">
-            <thead>
-                <th>No.</th>
-                <th>Nazwa produktu</th>
-                <th>Powiązana gra</th>
-                <th>Cena</th>
-                <th>Wydawca / producent</th>
-                <th>Kategoria</th>
-                <th>Opis</th>
-            </thead>
-            <c:forEach items="${products}" var="product" varStatus="stat">
-                <tr>
-                    <td>${stat.count}</td>
-                    <td>${product.name}</td>
-                    <td>${product.game.name}</td>
-                    <td>${product.priceInPln}</td>
-                    <td>${product.publisher.name}</td>
-                    <td>${product.category.name}</td>
-                    <td>${product.description}</td>
-                </tr>
-            </c:forEach>
-        </table>
+        <div class="container">
+            <div class="tile is-ancestor" style="flex-wrap: wrap">
+                <c:forEach items="${products}" var="product" varStatus="stat">
+                    <div class="tile is-parent is-3">
+                        <article class="tile is-child is-dark message" style="margin: 20px; padding: 20px">
+                            <a href="/products/view/${product.id}"></a>
+                            <p class="message-header" style="flex-wrap: wrap">
+                                ${product.name}
+                            </p>
+                            <p class="message-body" style="flex-wrap: wrap">
+                                Opis :: ${product.description} <br>
+                                Cena :: ${product.priceInPln}
+                            </p>
+                            <div class="field">
+                                <form:form action="/cart/addRecord" modelAttribute="orderRecord" method="post">
+                                    <p>
+                                        <form:input cssClass="input" path="quantity"/><form:errors path="quantity"/>
+                                    </p>
+                                    <form:hidden path="product" value="${product.id}"/>
+                                    <form:hidden path="unitPrice" value="${product.priceInPln}"/>
+                                    <p>
+                                        <button class="button is-success" type="submit">
+                                            Dodaj do koszyka
+                                        </button>
+                                    </p>
+                                </form:form>
+                            </div>
+                        </article>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+    <div class="container column is-1">
+        <div class="box is-fullheight">
+            KOSZYK ::
+            <div class="field">
+                <table class="table">
+                    <thead>
+                        <th>No.</th>
+                        <th>Nazwa</th>
+                    </thead>
+                    <c:forEach items="${sessionScope.shoppingCart.orderRecords}" var="record" varStatus="count">
+                        <tr>
+                            <td>${count.count}</td>
+                            <td>${record.product.name}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+
     </div>
 </section>
 </body>

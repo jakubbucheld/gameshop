@@ -11,6 +11,7 @@ import pl.gameshop.domain.model.User;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.List;
 public class Order extends ParentEntity
 {
     @OneToMany(fetch = FetchType.EAGER)
-    private List<OrderRecord> orderRecords;
+    private Set<OrderRecord> orderRecords;
 
     @ManyToOne
     @JoinColumn(nullable = false)

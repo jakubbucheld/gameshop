@@ -4,7 +4,7 @@
 <head>
     <title>${param.pageTitle}</title>
     <link rel="stylesheet" href="/webjars/bulma/0.8.2/css/bulma.min.css">
-    <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
+    <script defer src="/webjars/font-awesome/5.13.0/css/all.css"></script>
 </head>
 <body>
     <nav class="navbar has-background-light" role="navigation" aria-label="aria navigation">

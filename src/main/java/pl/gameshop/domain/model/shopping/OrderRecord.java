@@ -15,7 +15,7 @@ import javax.validation.constraints.Min;
 @Getter @Setter @ToString(callSuper = true, exclude = {"order", "product"})
 public class OrderRecord extends ParentEntity
 {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
     @Column @Min(1)
