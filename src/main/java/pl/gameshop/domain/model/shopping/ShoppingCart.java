@@ -44,7 +44,6 @@ public class ShoppingCart
     public void finalizeOrder(User user)
     {
         orderService.finalizeOrder(user);
-        this.setOrderRecords(Collections.emptyList());
     }
 }
 
