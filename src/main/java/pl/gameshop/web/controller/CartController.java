@@ -3,9 +3,12 @@ package pl.gameshop.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,8 +46,13 @@ public class CartController
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final CartService cartService;
+
+    @Autowired
+    private ShoppingCart shoppingCart;
+
     private final HttpSession session;
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
 
     @PostMapping("/addRecord")
     public String postOrderRecord(@Valid OrderRecord orderRecord,
@@ -67,8 +75,7 @@ public class CartController
             log.warn("Błąd dodania rekordu do koszyka :: {}", orderRecord);
         }
         log.info("Do koszyka dodano :: {}", orderRecord);
-        cartService.addProductToCart(orderRecord,
-                (ShoppingCart) session.getAttribute("shoppingCart"));
+        cartService.addProductToCart(orderRecord, shoppingCart);
         return "redirect:/products/all";
     }
 
@@ -85,20 +92,24 @@ public class CartController
                                        @AuthenticationPrincipal Principal principal)
     {
         model.addAttribute(session.getAttribute("shoppingCart"));
+
         return "/cart/finalize";
     }
 
     @PostMapping("/finalize")
-    public String processFinalizeOrder(@AuthenticationPrincipal Principal principal,
-                                       @Valid ShippingData shippingData)
+    public String processFinalizeOrder(@AuthenticationPrincipal Principal principal)
     {
-        if(principal.getName()==null)
+        log.info("principal :: {}", principal);
+        if(principal==null)
         {
             return "redirect:/login";
         }
+        log.info("principal :: {}", principal.getName());
         User user = userRepository.getByUsername(principal.getName());
-        ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("shoppingCart");
-        shoppingCart.getOrderService().finalizeOrder(user,shippingData);
+
+        log.info("koszyk :: {}", shoppingCart.toString());
+        shoppingCart.finalizeOrder(user);
+        shoppingCart.clearCart();
 
         return "redirect:/products/all";
     }

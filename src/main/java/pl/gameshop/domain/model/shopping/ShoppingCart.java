@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pl.gameshop.domain.model.Product;
+import pl.gameshop.domain.model.User;
 import pl.gameshop.service.CartService;
 import pl.gameshop.service.OrderService;
 
@@ -19,10 +20,10 @@ import java.util.*;
 @Getter @Setter
 public class ShoppingCart
 {
-    private List<OrderRecord> orderRecords;
-
     @Autowired
     private OrderService orderService;
+
+    private List<OrderRecord> orderRecords;
 
     public ShoppingCart()
     {
@@ -34,7 +35,17 @@ public class ShoppingCart
         this.orderRecords = orderRecords;
     }
 
+    public void clearCart()
+    {
+        this.orderRecords = new ArrayList<>();
+    }
 
+
+    public void finalizeOrder(User user)
+    {
+        orderService.finalizeOrder(user);
+        this.setOrderRecords(Collections.emptyList());
+    }
 }
 
 

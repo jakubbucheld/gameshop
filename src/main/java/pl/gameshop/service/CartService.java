@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,11 @@ public class CartService
     public Double getCartTotalValue(ShoppingCart cart)
     {
         List<OrderRecord> listOfOrderRecords = cart.getOrderRecords();
-        Double finalPrice = 0.0;
+        double finalPrice = 0.0;
         for (OrderRecord record: listOfOrderRecords)
         {
-            finalPrice += record.getQuantity()* record.getUnitPrice();
+            double recordPrice = record.getQuantity() * record.getUnitPrice();
+            finalPrice += recordPrice;
         }
         return finalPrice;
     }

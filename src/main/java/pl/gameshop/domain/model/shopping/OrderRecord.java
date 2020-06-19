@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 @Entity
 @Table(name = "order_records")
 
-@Getter @Setter @ToString(callSuper = true, exclude = {"order", "product"})
+@Getter @Setter @ToString(callSuper = true, exclude = {"product"})
 public class OrderRecord extends ParentEntity
 {
     @ManyToOne(fetch = FetchType.EAGER)
@@ -21,11 +21,7 @@ public class OrderRecord extends ParentEntity
     @Column @Min(1)
     private Integer quantity;
 
-    @Column
+    @Column(scale = 2)
     private Double unitPrice;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
 
 }

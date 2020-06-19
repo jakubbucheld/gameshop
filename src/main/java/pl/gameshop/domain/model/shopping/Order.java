@@ -27,14 +27,10 @@ public class Order extends ParentEntity
     private User user;
 
     @Column
-    LocalDateTime timeCreated;
+    private LocalDateTime timeCreated;
 
-    @Column
-    Double finalPrice;
-
-    @ManyToOne
-    @JoinColumn(name = "shipping", nullable = false)
-    private ShippingData orderShippingData;
+    @Column(scale = 2)
+    private Double finalPrice;
 
     @PrePersist
     void timeCreated()

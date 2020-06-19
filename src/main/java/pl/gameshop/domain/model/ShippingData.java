@@ -8,12 +8,12 @@ import javax.persistence.*;
 import java.util.Locale;
 
 @Entity
-@Table(name = "billing_datas")
+@Table(name = "shipping_datas")
 
 @Getter @Setter @ToString(callSuper = true, exclude =
         {"user", "phoneNumber", "addressFirstLine",
         "addressSecondLine", "houseNumber", "flatNumber",
-        "city","postalCode", "isoCountryCode"})
+        "city","postalCode"/*, "isoCountryCode"*/})
 public class ShippingData extends ParentEntity
 {
     @Column
@@ -46,8 +46,8 @@ public class ShippingData extends ParentEntity
     @Column(nullable = false)
     private String postalCode;
 
-    @Column(nullable = false)
-    private Locale.IsoCountryCode isoCountryCode;
+//    @Column(nullable = true)
+//    private Locale.IsoCountryCode isoCountryCode;
 
     @ManyToOne
     private User user;

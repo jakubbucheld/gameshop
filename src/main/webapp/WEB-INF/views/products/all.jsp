@@ -69,6 +69,9 @@
                     </c:forEach>
                 </table>
             </div>
+            <div>
+                <a href="/cart/finalize" class="button is-warning">PODSUMOWANIE</a>
+            </div>
         </div>
 
     </div>
