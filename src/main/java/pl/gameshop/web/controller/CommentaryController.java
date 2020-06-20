@@ -45,12 +45,14 @@ public class CommentaryController
                                         @AuthenticationPrincipal Principal principal)
     {
         User user = userRepository.getByUsername(principal.getName());
+        log.info("USER DODAWANEGO KOMENTARZA :: {}", user.getUsername());
         commentary.setAuthor(user);
 
         log.info("Komentarz do dodania :: {}", commentary);
         if(bindingResult.hasErrors())
         {
             log.warn("Błąd podczas zapisu obiektu ArticleCommentary :: {}", commentary);
+            log.warn(bindingResult.getAllErrors().toString());
             return "redirect:/articles/read/" +
                     commentary.getArticle().getId().toString();
         }

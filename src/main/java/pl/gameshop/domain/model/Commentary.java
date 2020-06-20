@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Getter @Setter @ToString(exclude = "author", callSuper = true)
+@Getter @Setter @ToString( callSuper = true)
 public abstract class Commentary extends ParentEntity
 {
     @Column
     private String content;
 
-    @ManyToOne @NotNull
+    @ManyToOne
     private User author;
 
     @Column(updatable = false)
