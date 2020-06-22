@@ -62,11 +62,19 @@ public class CommentaryController
     }
     @PostMapping("/addProductCommentary")
     public String postProductCommentary(@Valid ProductCommentary commentary,
-                                        BindingResult bindingResult)
+                                        BindingResult bindingResult,
+                                        @AuthenticationPrincipal Principal principal)
     {
-//        commentary.setArticle(articleRepository.getById(article));
-//        Long id = articleRepository.getById(article).getId();
+        User user = userRepository.getByUsername(principal.getName());
         log.info("Komentarz do dodania :: {}", commentary);
+        commentary.setAuthor(user);
+        if(commentary.getScore() < 1 || commentary.getScore() > 10)
+        {
+            log.warn("złe dane do zapisu :: nieprawidłowa ocena");
+            return "redirect:/products/view/" +
+                    commentary.getProduct().getId().toString();
+        }
+
         if(bindingResult.hasErrors())
         {
             log.warn("Błąd podczas zapisu obiektu ProductCommentary :: {}", commentary);

@@ -33,7 +33,7 @@
                         <c:forEach items="${user.roles}" varStatus="smallstat" var="role">
                             <form method="post" action="/users/${user.id}/deleteroles">
                                 <sec:csrfInput/>
-                                <button type="sumbit" name="roleName" value="${role}" class="button is-small is-outlined is-danger is-link is-light">Odbierz rolę ${role}</button>
+                                <button type="submit" name="roleName" value="${role}" class="button is-small is-outlined is-danger is-link is-light">Odbierz rolę ${role}</button>
                             </form>
                         </c:forEach>
                     </td>

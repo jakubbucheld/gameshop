@@ -22,10 +22,11 @@
                 <c:forEach items="${products}" var="product" varStatus="stat">
                     <div class="tile is-parent is-4">
                         <article class="tile is-child is-dark message" style="margin: 20px; padding: 20px">
-                            <a href="/products/view/${product.id}"></a>
-                            <p class="message-header" style="flex-wrap: wrap">
-                                ${product.name}
-                            </p>
+                            <a href="/products/view/${product.id}">
+                                <p class="message-header" style="flex-wrap: wrap">
+                                    ${product.name}
+                                </p>
+                            </a>
                             <p class="message-body" style="flex-wrap: wrap">
                                 Opis :: ${product.description} <br>
                                 Cena :: ${product.priceInPln}

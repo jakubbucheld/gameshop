@@ -32,9 +32,6 @@
 
             </div>
         </div>
-        <p class="subtitle" style="padding: 6px">
-            <strong style="color: blueviolet">a dupa tam</strong>
-        </p>
 </section>
 </body>
 </html>

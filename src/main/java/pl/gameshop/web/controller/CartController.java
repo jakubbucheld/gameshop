@@ -56,7 +56,8 @@ public class CartController
 
     @PostMapping("/addRecord")
     public String postOrderRecord(@Valid OrderRecord orderRecord,
-                                 BindingResult bindingResult)
+                                 BindingResult bindingResult,
+                                  @RequestHeader(value = "Referer", required = false) String referer)
     {
         if (session.getAttribute("shoppingCart")==null)
         {
@@ -76,7 +77,16 @@ public class CartController
         }
         log.info("Do koszyka dodano :: {}", orderRecord);
         cartService.addProductToCart(orderRecord, shoppingCart);
-        return "redirect:/products/all";
+
+        log.info(referer);
+        if(referer.equals("http://localhost:8080/cart/finalize"))
+        {
+            return "redirect:/cart/finalize";
+        }
+        else
+        {
+            return "redirect:/products/all";
+        }
     }
 
     @PostMapping("/remove")
@@ -91,6 +101,7 @@ public class CartController
     public String prepareFinalizeOrder(Model model,
                                        @AuthenticationPrincipal Principal principal)
     {
+        model.addAttribute("orderRecord", new OrderRecord());
         model.addAttribute(session.getAttribute("shoppingCart"));
 
         return "/cart/finalize";
@@ -104,6 +115,7 @@ public class CartController
         {
             return "redirect:/login";
         }
+
         log.info("principal :: {}", principal.getName());
         User user = userRepository.getByUsername(principal.getName());
 
@@ -113,4 +125,5 @@ public class CartController
 
         return "redirect:/products/all";
     }
+
 }

@@ -11,25 +11,6 @@
     <script defer src="/webjars/font-awesome/5.13.0/css/all.min.css"></script>
 </head>
 <body>
-<%-- PASEJK WYSZUKIWANIA_OLD--%>
-
-<%--<section>--%>
-<%--    <div class="container">--%>
-<%--        <label class="label">Szukaj...</label>--%>
-<%--            <form action="/articles/all">--%>
-<%--                <c:set var="searchPhrase" scope="request" value='<%= request.getParameter("search") %>'/>--%>
-<%--                <c:choose>--%>
-<%--                <c:when test="${searchPhrase} == null">--%>
-<%--                    <c:set var="searchedFor" scope="request" value=""/>--%>
-<%--                </c:when>--%>
-<%--                <c:otherwise>--%>
-<%--                    <c:set var="searchedFor" scope="request" value='<%= request.getParameter("search") %>'/>--%>
-<%--                </c:otherwise>--%>
-<%--                </c:choose>--%>
-<%--            <input type="text" name="search" placeholder="<c:out value='${searchedFor}'/>"/>--%>
-<%--            <input class="button is-primary is-small" type="submit">--%>
-<%--    </div>--%>
-<%--</section>--%>
 
 <section class="section columns is-fullheight">
     <div class="container column is-1 is-narrow message">

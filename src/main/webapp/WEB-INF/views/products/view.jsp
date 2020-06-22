@@ -40,14 +40,6 @@
                             ocena :: <form:input path="score" cssClass="number"/><form:errors path="score"/>
                         </p>
                         <p>
-                            Autor komentarza ::
-                            <form:select path="author">
-                                <form:option value="NONE" label="Wybierz..."/>
-                                <form:options itemValue="id" itemLabel="username" items="${usersList}"/>
-                            </form:select>
-                            <form:errors path="author"/>
-                        </p>
-                        <p>
                             <button class="button is-primary is-small" type="submit"> dodaj komentarz </button>
                         </p>
                         <form:hidden path="product" value="${product.id}" />
@@ -55,12 +47,19 @@
                 </div>
                 <div>
                     <c:forEach items="${currentCommentaryList}" var="commentary" varStatus="count">
-                        <article class="${commentary.author.roles.contains('ROLE_AUTHOR') ? 'message is-success' : 'message is-info'}">
-                            <div class="message-header">
-                                <p><strong>${commentary.author.username}</strong> | ${commentary.timeCreated} </p>
-                            </div>
-                            <div class="message-body">
+                        <article class="field has-addons is-fullwidth is-parent ${commentary.author.roles.contains('ROLE_AUTHOR') ? 'message is-success' : 'message is-info'}">
+                            <div class="is-10 control">
+                                <div class="message-header">
+                                    <p><strong>${commentary.author.username}</strong> | ${commentary.timeCreated} </p>
+                                </div>
+                                <div class="message-body">
                                     ${commentary.content}
+                                    <br>
+                                        <c:if test="${not empty commentary.score}">
+                                    OCENA ::
+                                        <strong> ${commentary.score} </strong>
+                                        </c:if>
+                                </div>
                             </div>
                         </article>
                     </c:forEach>

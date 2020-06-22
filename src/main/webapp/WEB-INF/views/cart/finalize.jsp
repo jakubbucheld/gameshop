@@ -30,16 +30,25 @@
                 <tr>
                     <td>${stat.count}</td>
                     <td>${record.product.name}</td>
-                    <td>${record.product.publisher}</td>
+                    <td>${record.product.publisher.name}</td>
                     <td>${record.unitPrice}</td>
                     <td>${record.quantity}</td>
                     <td>
-                        <button class="has-text-success" type="button">
-                            <i class="fas fa-plus-square "></i>
-                        </button>
-                        <button class="hes-text-danger" type="button">
-                            <i class="fas fa-minus-square"></i>
-                        </button>
+                        <form:form action="/cart/addRecord" modelAttribute="orderRecord" method="post">
+                                <sec:csrfInput/>
+                                <form:hidden path="product" value="${record.product.id}"/>
+                                <form:hidden path="unitPrice" value="${record.product.priceInPln}"/>
+                                <form:hidden path="quantity"  value="1"/>
+                            <button type="submit" class="button is-small is-outlined is-success">
+                                <i class="fas fa-plus-square "></i>
+                            </button>
+                        </form:form>
+                        <a class="button hes-text-danger" type="button">
+                            <sec:csrfInput/>
+                            <i class="fas fa-minus-square">
+                                <input type="hidden" name="quantity" value="1">
+                            </i>
+                        </a>
                     </td>
                 </tr>
             </c:forEach>
